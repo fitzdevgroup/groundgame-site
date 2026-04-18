@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GroundGame — Political Operations for Labor</title>
+  <meta name="description" content="The political operations platform built for labor unions. Legislative engagement, COPE administration, candidate pipeline, and volunteer coordination — in one place.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand:    #1A2535;
+      --brand-lg: #243347;
+      --ink:      #0D1520;
+      --paper:    #F7F4EF;
+      --paper-2:  #EDE9E2;
+      --paper-3:  #DDD8CF;
+      --rule:     #C8C3B8;
+      --rule-2:   #E4E0D8;
+      --text:     #1A1714;
+      --text-2:   #4A4740;
+      --text-3:   #7A7670;
+      --leg:      #5B21B6;
+      --pipe:     #B45309;
+      --vol:      #1D4ED8;
+      --cope:     #047857;
+      --red:      #991B1B;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 60px;
+      background: var(--brand);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-pawn {
+      width: 32px;
+      height: 32px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #fff;
+    }
+
+    .nav-wordmark {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 19px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.92);
+      letter-spacing: 0.01em;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-link {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-link:hover { color: rgba(255,255,255,0.9); }
+
+    .nav-btn {
+      height: 32px;
+      padding: 0 14px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      color: rgba(255,255,255,0.9);
+      font-size: 12px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      transition: background 0.15s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.18); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--brand);
+      padding: 140px 48px 100px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .hero-left {}
+
+    .hero-context {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: clamp(42px, 5vw, 68px);
+      font-weight: 300;
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .hero-lede {
+      font-size: 17px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      max-width: 460px;
+      margin-bottom: 48px;
+    }
+
+    .hero-lede strong {
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      background: var(--paper);
+      border-radius: 16px;
+      padding: 36px 32px;
+      position: relative;
+    }
+
+    .form-card-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 8px;
+    }
+
+    .form-card h2 {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .form-card-sub {
+      font-size: 13px;
+      color: var(--text-3);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--rule-2);
+    }
+
+    .form-field {
+      margin-bottom: 14px;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      margin-bottom: 5px;
+    }
+
+    .form-field input,
+    .form-field select {
+      width: 100%;
+      height: 40px;
+      padding: 0 12px;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      background: white;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+      appearance: none;
+    }
+    .form-field input:focus,
+    .form-field select:focus {
+      border-color: var(--leg);
+    }
+    .form-field input::placeholder { color: var(--text-3); }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .form-submit {
+      width: 100%;
+      height: 44px;
+      background: var(--brand);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: opacity 0.15s;
+    }
+    .form-submit:hover { opacity: 0.88; }
+
+    .form-fine {
+      font-size: 11px;
+      color: var(--text-3);
+      text-align: center;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    .form-success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 24px 0;
+      gap: 12px;
+    }
+
+    .success-mark {
+      width: 48px;
+      height: 48px;
+      background: #D1FAE5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .success-title {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .success-text {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: var(--brand-lg);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .trust-bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .trust-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .trust-items {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .trust-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
+
+    /* ── BODY SECTIONS ── */
+    .body-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    /* ── PAIN SECTION ── */
+    .pain-section {
+      padding: 96px 0 80px;
+      border-bottom: 1px solid var(--rule-2);
+    }
+
+    .section-kicker {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 14px;
+    }
+
+    .section-h {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .section-body {
+      font-size: 16px;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 540px;
+      margin-bottom: 56px;
+    }
+
+    .pain-items {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--rule-2);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .pain-item {
+      padding: 32px 28px;
+      border-right: 1px solid var(--rule-2);
+      background: white;
+    }
+    .pain-item:last-child { border-right: none; }
+
+    .pain-rule {
+      width: 28px;
+      height: 2px;
+      border-radius: 1px;
+      margin-bottom: 18px;
+    }
+    .pain-item:nth-child(1) .pain-rule { background: var(--leg); }
+    .pain-item:nth-child(2) .pain-rule { background: var(--cope); }
+    .pain-item:nth-child(3) .pain-rule { background: var(--pipe); }
+
+    .pain-q {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .pain-a {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+
+    /* ── MODULES ── */
+    .modules-section {
+      padding: 96px 0 80px;
+      border-bottom: 1px solid var(--rule-2);
+    }
+
+    .modules-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+      margin-bottom: 56px;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .module-card {
+      background: white;
+      border: 1px solid var(--rule-2);
+      border-radius: 12px;
+      padding: 28px;
+      transition: border-color 0.2s;
+    }
+    .module-card:hover { border-color: var(--rule); }
+
+    .module-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+
+    .module-card.leg .module-tag { background: #EDE9FE; color: var(--leg); }
+    .module-card.pipe .module-tag { background: #FEF3C7; color: var(--pipe); }
+    .module-card.vol .module-tag { background: #DBEAFE; color: var(--vol); }
+    .module-card.cope .module-tag { background: #D1FAE5; color: var(--cope); }
+
+    .module-title {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .module-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--rule-2);
+    }
+
+    .module-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .module-features li {
+      font-size: 12px;
+      color: var(--text-3);
+      padding-left: 12px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .module-features li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--rule);
+      font-size: 16px;
+      line-height: 1;
+      top: 1px;
+    }
+
+    /* ── SPECIFICS ── */
+    .specifics-section {
+      padding: 96px 0 80px;
+      border-bottom: 1px solid var(--rule-2);
+    }
+
+    .specifics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 56px;
+    }
+
+    .spec-item {
+      padding-top: 24px;
+      border-top: 2px solid var(--rule-2);
+      transition: border-color 0.2s;
+    }
+    .spec-item:hover { border-top-color: var(--brand); }
+
+    .spec-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .spec-text {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+
+    /* ── BOTTOM CTA ── */
+    .bottom-cta {
+      background: var(--brand);
+      padding: 96px 48px;
+    }
+
+    .bottom-cta-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .cta-left {}
+
+    .cta-kicker {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 14px;
+    }
+
+    .cta-h {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: clamp(32px, 3vw, 46px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: rgba(255,255,255,0.92);
+      margin-bottom: 16px;
+    }
+
+    .cta-body {
+      font-size: 15px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      max-width: 420px;
+    }
+
+    .cta-form-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 28px;
+    }
+
+    .cta-form-card .form-field label {
+      color: rgba(255,255,255,0.5);
+    }
+
+    .cta-form-card .form-field input,
+    .cta-form-card .form-field select {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.9);
+    }
+
+    .cta-form-card .form-field input::placeholder {
+      color: rgba(255,255,255,0.25);
+    }
+
+    .cta-form-card .form-field input:focus {
+      border-color: rgba(124,58,237,0.6);
+    }
+
+    .cta-submit {
+      width: 100%;
+      height: 44px;
+      background: white;
+      color: var(--brand);
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: opacity 0.15s;
+    }
+    .cta-submit:hover { opacity: 0.9; }
+
+    .cta-fine {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .cta-success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+      padding: 16px 0;
+    }
+
+    .cta-success-text {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      padding: 28px 48px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .footer-pawn { color: rgba(255,255,255,0.4); font-size: 16px; }
+    .footer-name {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 15px;
+      color: rgba(255,255,255,0.35);
+      font-weight: 400;
+    }
+
+    .footer-links { display: flex; gap: 24px; }
+    .footer-link {
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-link:hover { color: rgba(255,255,255,0.4); }
+
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.2); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap: 48px; padding: 120px 24px 64px; }
+      .trust-bar-inner { padding: 20px 24px; flex-wrap: wrap; gap: 16px; }
+      .body-wrap { padding: 0 24px; }
+      .pain-items { grid-template-columns: 1fr; }
+      .pain-item { border-right: none; border-bottom: 1px solid var(--rule-2); }
+      .pain-item:last-child { border-bottom: none; }
+      .modules-header { grid-template-columns: 1fr; gap: 24px; }
+      .modules-grid { grid-template-columns: 1fr; }
+      .specifics-grid { grid-template-columns: 1fr; }
+      .bottom-cta { padding: 64px 24px; }
+      .bottom-cta-inner { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+      nav { padding: 0 24px; }
+      .nav-right .nav-link { display: none; }
+      footer { padding: 24px; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-pawn">♟</div>
+      <span class="nav-wordmark">GroundGame</span>
+    </a>
+    <div class="nav-right">
+      <a href="#modules" class="nav-link">Modules</a>
+      <a href="#who" class="nav-link">Who It's For</a>
+      <a href="#request" class="nav-btn">Request Access</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div style="background: var(--brand);">
+    <div class="hero">
+      <div class="hero-left">
+        <span class="hero-context">Political Operations Platform · Private Beta</span>
+        <h1>
+          The spreadsheet holding<br>
+          your lobby day together<br>
+          <em>is going to fail you.</em>
+        </h1>
+        <p class="hero-lede">
+          GroundGame is purpose-built political operations software
+          for labor unions. <strong>Legislative engagement, COPE
+          administration, candidate pipeline, and volunteer
+          coordination</strong> — in one platform that understands
+          how political departments actually work.
+        </p>
+        <div style="display:flex; gap:24px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#7C3AED;"></div>
+            <span style="font-size:13px;color:rgba(255,255,255,0.5);">Legislative Engagement</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#D97706;"></div>
+            <span style="font-size:13px;color:rgba(255,255,255,0.5);">Political Pipeline</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#2563EB;"></div>
+            <span style="font-size:13px;color:rgba(255,255,255,0.5);">Volunteer Campaigns</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#059669;"></div>
+            <span style="font-size:13px;color:rgba(255,255,255,0.5);">COPE Administration</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORM CARD -->
+      <div class="form-card" id="request">
+        <div class="form-card-label">Request Early Access</div>
+        <h2>Join the beta.</h2>
+        <p class="form-card-sub">
+          GroundGame is in private beta with a small group of
+          labor political programs. Tell us about your organization
+          and we'll be in touch.
+        </p>
+
+        <form id="hero-form" onsubmit="submitHeroForm(event)">
+          <div class="form-row">
+            <div class="form-field">
+              <label>First Name</label>
+              <input type="text" placeholder="Maria" required />
+            </div>
+            <div class="form-field">
+              <label>Last Name</label>
+              <input type="text" placeholder="Santos" required />
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Work Email</label>
+            <input type="email" placeholder="you@yourorg.org" required />
+          </div>
+          <div class="form-field">
+            <label>Organization</label>
+            <input type="text" placeholder="SEIU Local 1000" required />
+          </div>
+          <div class="form-field">
+            <label>Your Role</label>
+            <select required>
+              <option value="" disabled selected>Select your role</option>
+              <option>Political Director</option>
+              <option>Legislative Director</option>
+              <option>Executive Director</option>
+              <option>COPE Director</option>
+              <option>Political Staff</option>
+              <option>IT / Technology</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <button type="submit" class="form-submit">
+            Request Early Access →
+          </button>
+        </form>
+
+        <div class="form-success" id="hero-success">
+          <div class="success-mark">✓</div>
+          <div class="success-title">Request received.</div>
+          <p class="success-text">
+            We'll review your information and reach out shortly.
+            Questions in the meantime? Email us at
+            <a href="mailto:hello@groundgameops.com"
+              style="color:var(--leg);text-decoration:none;">
+              hello@groundgameops.com
+            </a>
+          </p>
+        </div>
+
+        <p class="form-fine">
+          Early access is by invitation only.<br>
+          We don't share your information.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-bar-inner">
+      <span class="trust-label">Designed for</span>
+      <div class="trust-items">
+        <div class="trust-item"><div class="trust-dot"></div>State & Local Unions</div>
+        <div class="trust-item"><div class="trust-dot"></div>State Federations</div>
+        <div class="trust-item"><div class="trust-dot"></div>Central Labor Councils</div>
+        <div class="trust-item"><div class="trust-dot"></div>Advocacy Organizations</div>
+        <div class="trust-item"><div class="trust-dot"></div>Political Action Committees</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAIN -->
+  <div class="body-wrap">
+    <section class="pain-section">
+      <div class="section-kicker">The Problem</div>
+      <h2 class="section-h">
+        Your political program is more sophisticated
+        than your tools.
+      </h2>
+      <p class="section-body">
+        Unions have been running serious political operations
+        for decades — but the software catching up to that work
+        has mostly been built for campaigns or corporations,
+        not for the way unions actually operate.
+      </p>
+      <div class="pain-items">
+        <div class="pain-item">
+          <div class="pain-rule"></div>
+          <div class="pain-q">Where does your legislator relationship data actually live?</div>
+          <p class="pain-a">
+            Stance history, visit logs, staff contact notes —
+            scattered across personal spreadsheets, email threads,
+            and the institutional memory of whoever's been in
+            the job longest. When that person leaves, it goes with them.
+          </p>
+        </div>
+        <div class="pain-item">
+          <div class="pain-rule"></div>
+          <div class="pain-q">How does your COPE committee actually vote on contributions?</div>
+          <p class="pain-a">
+            Reply-all email chains. SharePoint documents nobody
+            can find. PDFs signed and scanned. If your attorney
+            notification process involves forwarding an email
+            and hoping, you're not alone.
+          </p>
+        </div>
+        <div class="pain-item">
+          <div class="pain-rule"></div>
+          <div class="pain-q">What happens to your pipeline when a candidate wins?</div>
+          <p class="pain-a">
+            Years of cultivation work — meetings logged, relationships
+            built, assessments written — lives in a spreadsheet
+            that doesn't talk to your legislative tracking system.
+            Starting over every cycle costs you.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODULES -->
+  <div class="body-wrap">
+    <section class="modules-section" id="modules">
+      <div class="modules-header">
+        <div>
+          <div class="section-kicker">The Platform</div>
+          <h2 class="section-h">
+            Four modules.<br>One political program.
+          </h2>
+        </div>
+        <p class="section-body" style="margin-bottom:0;">
+          Every module shares a unified People CRM.
+          A member who volunteers at a lobby day, gets
+          cultivated as a pipeline prospect, and eventually
+          sits on your COPE committee — that's one record,
+          not three.
+        </p>
+      </div>
+
+      <div class="modules-grid">
+        <div class="module-card leg">
+          <span class="module-tag">Legislative</span>
+          <div class="module-title">Legislative Engagement</div>
+          <p class="module-desc">
+            Track every legislator relationship — stance, visits,
+            staff contacts, bill positions — with the reliability
+            intelligence to know who keeps their word.
+          </p>
+          <ul class="module-features">
+            <li>Legislator directory sorted by stance (Strong Ally → Strong Oppose)</li>
+            <li>Visit log with offline support — built for hallways, not desks</li>
+            <li>Bill tracking with stated, predicted, and actual vote</li>
+            <li>Reliability scoring: who says yes and means it</li>
+            <li>Lobby day briefing reports, engagement summaries</li>
+          </ul>
+        </div>
+
+        <div class="module-card cope">
+          <span class="module-tag">COPE</span>
+          <div class="module-title">COPE Administration</div>
+          <p class="module-desc">
+            The first purpose-built tool for union COPE operations.
+            Structured contribution workflows, secure committee
+            voting, and automated attorney notifications.
+          </p>
+          <ul class="module-features">
+            <li>Candidate CRM with full contribution history</li>
+            <li>Contribution request workflow: submitted → reviewed → committee → approved</li>
+            <li>Committee members vote via secure token link — no login required</li>
+            <li>Attorney notification automation with audit trail</li>
+            <li>Expenditure account management and utilization tracking</li>
+          </ul>
+        </div>
+
+        <div class="module-card pipe">
+          <span class="module-tag">Pipeline</span>
+          <div class="module-title">Political Pipeline</div>
+          <p class="module-desc">
+            Candidate cultivation is a ten-year project.
+            GroundGame gives it a home — from first meeting
+            to election night to their first session as
+            a legislator you've already been tracking.
+          </p>
+          <ul class="module-features">
+            <li>Kanban from On Radar → Cultivating → Candidate → Elected</li>
+            <li>Cohort management: Women in Politics, Next Gen Leaders, Labor Bench</li>
+            <li>Touchpoint logging with relationship strength tracking</li>
+            <li>Graduation: prospect wins election, history transfers to Legislative</li>
+          </ul>
+        </div>
+
+        <div class="module-card vol">
+          <span class="module-tag">Volunteers</span>
+          <div class="module-title">Volunteer Campaigns</div>
+          <p class="module-desc">
+            From org-branded signup pages to geofenced
+            lobby day check-in. The volunteer experience
+            your members deserve, and the attendance data
+            your political program needs.
+          </p>
+          <ul class="module-features">
+            <li>Campaign management across events and programs</li>
+            <li>Three event modes: volunteer shifts, attendance, paid</li>
+            <li>Geofenced self check-in — no staff needed at the door</li>
+            <li>Org-branded public pages with your logo and colors</li>
+            <li>Lobby experience auto-populates on member skills record</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SPECIFICS -->
+  <div class="body-wrap">
+    <section class="specifics-section" id="who">
+      <div class="section-kicker">The Details That Matter</div>
+      <h2 class="section-h">Built with political operations<br>in mind from day one.</h2>
+
+      <div class="specifics-grid">
+        <div class="spec-item">
+          <div class="spec-title">Multi-tenant data isolation</div>
+          <p class="spec-text">
+            Every organization's data is completely isolated.
+            Your legislator relationships, COPE records, and
+            candidate pipeline are never visible to another org —
+            not even your parent organization unless you grant access.
+          </p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-title">Parent org hierarchy</div>
+          <p class="spec-text">
+            State councils and international staff can have
+            read access across locals with a single login.
+            Locals maintain full control of their own data.
+            No shared passwords, no Excel exports.
+          </p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-title">Offline-first field tools</div>
+          <p class="spec-text">
+            The visit log and event check-in are built to
+            work without reliable cell service. Logs queue
+            locally and sync when you're back online —
+            because capitol hallways don't always have signal.
+          </p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-title">Role-based access control</div>
+          <p class="spec-text">
+            Six distinct roles from SaaS Admin down to
+            Read Only. COPE committee members can only
+            see the votes they're authorized to cast.
+            Political staff can't change org settings.
+          </p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-title">Branded public pages</div>
+          <p class="spec-text">
+            Every volunteer signup page, paid event
+            registration, and COPE contribution request
+            form carries your logo, your colors, and
+            your messaging — not ours.
+          </p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-title">Full audit trail</div>
+          <p class="spec-text">
+            Every COPE contribution decision, committee
+            vote, and financial action is logged with
+            timestamp, user, and IP. When your attorney
+            asks for documentation, it's already there.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- BOTTOM CTA -->
+  <div class="bottom-cta">
+    <div class="bottom-cta-inner">
+      <div class="cta-left">
+        <div class="cta-kicker">Early Access</div>
+        <h2 class="cta-h">
+          We're working with a small group
+          of labor political programs to
+          get this right.
+        </h2>
+        <p class="cta-body">
+          GroundGame is in private beta. We're looking
+          for political directors and political departments
+          who want to help shape the tool and are willing
+          to give honest feedback in exchange for early access.
+          <br><br>
+          Questions? Email us directly at
+          <a href="mailto:hello@groundgameops.com"
+            style="color:rgba(255,255,255,0.6);text-decoration:underline;text-underline-offset:3px;">
+            hello@groundgameops.com
+          </a>
+        </p>
+      </div>
+
+      <div class="cta-form-card">
+        <form id="cta-form" onsubmit="submitCtaForm(event)">
+          <div class="form-field">
+            <label>Work Email</label>
+            <input type="email" placeholder="you@yourorg.org" required />
+          </div>
+          <div class="form-field">
+            <label>Organization</label>
+            <input type="text" placeholder="SEIU Local 1000" required />
+          </div>
+          <div class="form-field">
+            <label>Your Role</label>
+            <select required style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12);color:rgba(255,255,255,0.9);">
+              <option value="" disabled selected style="background:#1A2535;">Select your role</option>
+              <option style="background:#1A2535;">Political Director</option>
+              <option style="background:#1A2535;">Legislative Director</option>
+              <option style="background:#1A2535;">Executive Director</option>
+              <option style="background:#1A2535;">COPE Director</option>
+              <option style="background:#1A2535;">Political Staff</option>
+              <option style="background:#1A2535;">IT / Technology</option>
+              <option style="background:#1A2535;">Other</option>
+            </select>
+          </div>
+          <button type="submit" class="cta-submit">
+            Request Early Access →
+          </button>
+        </form>
+
+        <div class="cta-success" id="cta-success">
+          <div style="font-size:28px;">✓</div>
+          <div class="cta-success-text">Request received. We'll be in touch soon.</div>
+        </div>
+
+        <p class="cta-fine">Invitation-only beta. No spam.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <a href="#" class="footer-logo">
+        <span class="footer-pawn">♟</span>
+        <span class="footer-name">GroundGame</span>
+      </a>
+      <div class="footer-links">
+        <a href="mailto:hello@groundgameops.com" class="footer-link">hello@groundgameops.com</a>
+        <a href="#" class="footer-link">Privacy</a>
+        <a href="#" class="footer-link">Terms</a>
+      </div>
+      <div class="footer-copy">© 2026 FitzDevGroup</div>
+    </div>
+  </footer>
+
+  <script>
+    const FORMSPREE = 'https://formspree.io/f/mvzdraez'
+
+    async function submitHeroForm(e) {
+      e.preventDefault()
+      const form = document.getElementById('hero-form')
+      const btn = form.querySelector('button[type="submit"]')
+      btn.textContent = 'Sending…'
+      btn.disabled = true
+      try {
+        const res = await fetch(FORMSPREE, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        })
+        if (res.ok) {
+          form.style.display = 'none'
+          document.getElementById('hero-success').style.display = 'flex'
+        } else {
+          btn.textContent = 'Try again'
+          btn.disabled = false
+        }
+      } catch {
+        btn.textContent = 'Try again'
+        btn.disabled = false
+      }
+    }
+
+    async function submitCtaForm(e) {
+      e.preventDefault()
+      const form = document.getElementById('cta-form')
+      const btn = form.querySelector('button[type="submit"]')
+      btn.textContent = 'Sending…'
+      btn.disabled = true
+      try {
+        const res = await fetch(FORMSPREE, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        })
+        if (res.ok) {
+          form.style.display = 'none'
+          document.getElementById('cta-success').style.display = 'flex'
+        } else {
+          btn.textContent = 'Try again'
+          btn.disabled = false
+        }
+      } catch {
+        btn.textContent = 'Try again'
+        btn.disabled = false
+      }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        const t = document.querySelector(this.getAttribute('href'))
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }) }
+      })
+    })
+  </script>
+</body>
+</html>
