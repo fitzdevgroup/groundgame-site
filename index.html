@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GroundGame — Political Operations for Labor</title>
   <meta name="description" content="The political operations platform built for labor unions. Legislative engagement, COPE administration, candidate pipeline, and volunteer coordination — in one place.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
@@ -57,26 +61,20 @@
     .nav-logo {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       text-decoration: none;
     }
 
     .nav-pawn {
-      width: 32px;
-      height: 32px;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      color: #fff;
+      width: 40px;
+      height: 40px;
+      display: block;
+      flex-shrink: 0;
     }
 
     .nav-wordmark {
       font-family: 'Crimson Pro', Georgia, serif;
-      font-size: 19px;
+      font-size: 22px;
       font-weight: 400;
       color: rgba(255,255,255,0.92);
       letter-spacing: 0.01em;
@@ -670,7 +668,13 @@
       text-decoration: none;
     }
 
-    .footer-pawn { color: rgba(255,255,255,0.4); font-size: 16px; }
+    .footer-pawn {
+      width: 14px;
+      height: 18px;
+      display: block;
+      flex-shrink: 0;
+      color: rgba(255,255,255,0.4);
+    }
     .footer-name {
       font-family: 'Crimson Pro', Georgia, serif;
       font-size: 15px;
@@ -715,7 +719,12 @@
   <!-- NAV -->
   <nav>
     <a href="#" class="nav-logo">
-      <div class="nav-pawn">♟</div>
+      <svg class="nav-pawn" viewBox="0 0 84 84" aria-hidden="true">
+        <circle cx="42" cy="42" r="42" fill="#D97706"/>
+        <svg viewBox="0 0 32 40" x="20" y="16" width="44" height="55">
+          <path fill="#FFFFFF" d="M26,27.0506V26.5a3.495,3.495,0,0,0,-3,-3.44946V21.43115a.50066.50066,0,0,0,-.2959-.45654C20.1676,19.84271,18.96405,17.5484,19.00165,14H20a2,2,0,0,0,0-4h-.00519A4.95371,4.95371,0,0,0,21,7,5,5,0,0,0,11,7a4.95349,4.95349,0,0,0,1.00525,3H12a2,2,0,0,0,0,4h.99878c.03711,3.54889,-1.1673,5.8432-3.70239,6.97461A.50031.50031,0,0,0,9,21.43115v1.61938A3.495,3.495,0,0,0,6,26.5v.5506A2.504,2.504,0,0,0,4,29.5a.49971.49971,0,0,0,.5.5h23a.49971.49971,0,0,0,.5-.5A2.50379,2.50379,0,0,0,26,27.0506Z"/>
+        </svg>
+      </svg>
       <span class="nav-wordmark">GroundGame</span>
     </a>
     <div class="nav-right">
@@ -1134,7 +1143,9 @@
   <footer>
     <div class="footer-inner">
       <a href="#" class="footer-logo">
-        <span class="footer-pawn">♟</span>
+        <svg class="footer-pawn" viewBox="0 0 32 40" aria-hidden="true">
+          <path fill="currentColor" d="M26,27.0506V26.5a3.495,3.495,0,0,0,-3,-3.44946V21.43115a.50066.50066,0,0,0,-.2959-.45654C20.1676,19.84271,18.96405,17.5484,19.00165,14H20a2,2,0,0,0,0-4h-.00519A4.95371,4.95371,0,0,0,21,7,5,5,0,0,0,11,7a4.95349,4.95349,0,0,0,1.00525,3H12a2,2,0,0,0,0,4h.99878c.03711,3.54889,-1.1673,5.8432-3.70239,6.97461A.50031.50031,0,0,0,9,21.43115v1.61938A3.495,3.495,0,0,0,6,26.5v.5506A2.504,2.504,0,0,0,4,29.5a.49971.49971,0,0,0,.5.5h23a.49971.49971,0,0,0,.5-.5A2.50379,2.50379,0,0,0,26,27.0506Z"/>
+        </svg>
         <span class="footer-name">GroundGame</span>
       </a>
       <div class="footer-links">
